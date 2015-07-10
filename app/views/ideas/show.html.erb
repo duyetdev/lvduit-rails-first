@@ -1,18 +1,46 @@
-<p id="notice"><%= notice %></p>
+<% if notice %>
+	<div class="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		<%= notice %>
+	</div>
+<% end %>
+
+<div class="jumbotron">
+	<div class="container">
+
+		<p>
+		  <strong>Name:</strong>
+		  <%= @idea.name %>
+		</p>
+
+		<p>
+		  <strong>Desc:</strong>
+		  <%= @idea.desc %>
+		</p>
+
+		<p>
+		  <strong>Pic:</strong>
+		  <%= image_tag(@idea.pic_url) if @idea.pic.present? %>
+		</p>
+		
+	</div>
+</div>
 
 <p>
-  <strong>Name:</strong>
-  <%= @idea.name %>
-</p>
+	<h3>Comments</h3>
+	<% @comments.each do |cmt| %>
+		<div>
+			
+			<p>
+				<strong><%= cmt.user_name %>:</strong> <%= cmt.body %>
+			</p>
+			<p>
+				<%= link_to 'Delete', comment_path(cmt), method: :delete, data: { confirm: 'Are you sure?' } %>
+			</p>
+		</div>
+	<% end %>
 
-<p>
-  <strong>Desc:</strong>
-  <%= @idea.desc %>
-</p>
-
-<p>
-  <strong>Pic:</strong>
-  <%= image_tag(@idea.pic_url) if @idea.pic.present? %>
+	<%= render 'comments/form' %>
 </p>
 
 <%= link_to 'Edit', edit_idea_path(@idea) %> |
